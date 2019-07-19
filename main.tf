@@ -13,23 +13,12 @@ resource "azurerm_network_security_group" "main" {
   resource_group_name = "${azurerm_resource_group.main.name}"
 }
 
-resource "azurerm_network_ddos_protection_plan" "main" {
-  name                = "${random_id.projectname.hex}-ddospplan"
-  location            = "${azurerm_resource_group.main.location}"
-  resource_group_name = "${azurerm_resource_group.main.name}"
-}
-
 resource "azurerm_virtual_network" "main" {
   name                = "${random_id.projectname.hex}-vn"
   location            = "${azurerm_resource_group.main.location}"
   resource_group_name = "${azurerm_resource_group.main.name}"
   address_space       = ["10.0.0.0/16"]
   dns_servers         = ["10.0.0.4", "10.0.0.5"]
-
-  ddos_protection_plan {
-    id     = "${azurerm_network_ddos_protection_plan.main.id}"
-    enable = true
-  }
 
   subnet {
     name           = "subnet1"
