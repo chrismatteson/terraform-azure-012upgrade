@@ -1,26 +1,26 @@
-resource "random_id" "project_name" {
+resource "random_id" "projectname" {
   byte_length = 4
 }
 
 resource "azurerm_resource_group" "main" {
-  name     = "${random_id.project_name.hex}"
+  name     = "${random_id.projectname.hex}"
   location = "West US"
 }
 
 resource "azurerm_network_security_group" "main" {
-  name                = "${random_id.project_name.hex}-nsg"
+  name                = "${random_id.projectname.hex}-nsg"
   location            = "${azurerm_resource_group.main.location}"
   resource_group_name = "${azurerm_resource_group.main.name}"
 }
 
 resource "azurerm_network_ddos_protection_plan" "main" {
-  name                = "${random_id.project_name.hex}-ddospplan"
+  name                = "${random_id.projectname.hex}-ddospplan"
   location            = "${azurerm_resource_group.main.location}"
   resource_group_name = "${azurerm_resource_group.main.name}"
 }
 
 resource "azurerm_virtual_network" "main" {
-  name                = "${random_id.project_name.hex}-vn"
+  name                = "${random_id.projectname.hex}-vn"
   location            = "${azurerm_resource_group.main.location}"
   resource_group_name = "${azurerm_resource_group.main.name}"
   address_space       = ["10.0.0.0/16"]
