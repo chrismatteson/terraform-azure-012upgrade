@@ -25,6 +25,7 @@ resource "azurerm_virtual_network" "main" {
     content {
       name           = "subnet${subnet.key+1}"
       address_prefix = "10.0.${subnet.value}.0/24"
+      security_group = "${azurerm_network_security_group.main.id}"
     }
   }
 
